@@ -1,10 +1,22 @@
 import { cookies } from "next/headers";
+import { timingSafeEqual } from "crypto";
 
 const COOKIE_NAME = "admin_session";
 const COOKIE_MAX_AGE = 60 * 60 * 24; // 24 hours
 
+function getSecret(): string {
+  const secret = process.env.COOKIE_SECRET;
+  if (!secret) throw new Error("COOKIE_SECRET environment variable is required");
+  return secret;
+}
+
+function safeCompare(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(Buffer.from(a), Buffer.from(b));
+}
+
 async function sign(value: string): Promise<string> {
-  const secret = process.env.ADMIN_PASSWORD || "changeme";
+  const secret = getSecret();
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
     "raw",
@@ -23,23 +35,39 @@ async function sign(value: string): Promise<string> {
 }
 
 async function verify(token: string): Promise<boolean> {
-  const parts = token.split(".");
-  if (parts.length !== 2) return false;
-  const [value, _sig] = parts;
+  const dotIndex = token.indexOf(".");
+  if (dotIndex === -1) return false;
+  const value = token.substring(0, dotIndex);
   const expected = await sign(value);
-  return token === expected;
+  return safeCompare(token, expected);
 }
 
 export async function login(username: string, password: string): Promise<boolean> {
-  if (username !== (process.env.ADMIN_USERNAME || "admin")) return false;
-  if (password !== process.env.ADMIN_PASSWORD) return false;
+  const expectedUsername = process.env.ADMIN_USERNAME;
+  const expectedPassword = process.env.ADMIN_PASSWORD;
+
+  if (!expectedUsername || !expectedPassword) {
+    throw new Error("ADMIN_USERNAME and ADMIN_PASSWORD environment variables are required");
+  }
+
+  // Timing-safe comparison for both username and password
+  const usernameMatch = safeCompare(
+    Buffer.from(username).toString("base64"),
+    Buffer.from(expectedUsername).toString("base64")
+  );
+  const passwordMatch = safeCompare(
+    Buffer.from(password).toString("base64"),
+    Buffer.from(expectedPassword).toString("base64")
+  );
+
+  if (!usernameMatch || !passwordMatch) return false;
 
   const token = await sign("admin");
   const cookieStore = await cookies();
   cookieStore.set(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "strict",
     maxAge: COOKIE_MAX_AGE,
     path: "/",
   });

@@ -23,7 +23,9 @@ export default async function HomePage() {
     <>
       <header className="bg-primary text-white">
         <div className="max-w-7xl mx-auto px-6 py-8 flex items-center gap-5">
-          <img src="/logo.svg" alt="Inzite" className="h-10 brightness-0 invert" />
+          <a href="https://inzite.com" target="_blank" rel="noopener noreferrer">
+            <img src="/logo-white.svg" alt="Inzite" className="h-10" />
+          </a>
           <div>
             <h1 className="text-2xl font-bold">{siteTitle}</h1>
             <p className="mt-1 text-accent text-sm">

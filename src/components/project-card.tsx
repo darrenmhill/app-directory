@@ -60,14 +60,7 @@ export default function ProjectCard({
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h2 className="text-lg font-semibold text-primary">{displayName || githubName}</h2>
-          {stars > 0 && (
-            <span className="text-sm text-muted shrink-0" title="Stars">
-              &#9733; {stars}
-            </span>
-          )}
-        </div>
+        <h2 className="text-lg font-semibold text-primary mb-2">{displayName || githubName}</h2>
 
         <p className="text-sm text-secondary mb-2">
           {shortDesc.trim() || formatName(githubName)}

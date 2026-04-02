@@ -1,22 +1,33 @@
 import { prisma } from "./prisma";
+import { isValidPublicUrl } from "./url-validation";
 
 const TIMEOUT = 15000; // 15s per screenshot
 
 /**
- * Fetches a screenshot of a URL using thum.io and stores it in the database.
+ * Fetches a screenshot of a URL using Microlink and stores it in the database.
  */
 export async function captureScreenshot(projectId: string, url: string): Promise<boolean> {
+  if (!isValidPublicUrl(url)) {
+    console.warn(`[SCREENSHOT] Blocked private/invalid URL for ${projectId}: ${url}`);
+    return false;
+  }
+
   try {
     const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`;
 
     const res = await fetch(screenshotUrl, { signal: AbortSignal.timeout(TIMEOUT) });
-    if (!res.ok) return false;
+    if (!res.ok) {
+      console.warn(`[SCREENSHOT] Microlink returned ${res.status} for ${projectId}`);
+      return false;
+    }
 
     const contentType = res.headers.get("content-type") || "image/png";
     const buffer = Buffer.from(await res.arrayBuffer());
 
-    // Only save if we got a reasonable image (> 5KB to filter out error pages)
-    if (buffer.length < 5000) return false;
+    if (buffer.length < 5000) {
+      console.warn(`[SCREENSHOT] Image too small (${buffer.length}b) for ${projectId}`);
+      return false;
+    }
 
     await prisma.project.update({
       where: { id: projectId },
@@ -26,8 +37,10 @@ export async function captureScreenshot(projectId: string, url: string): Promise
       },
     });
 
+    console.log(`[SCREENSHOT] Captured for ${projectId} (${buffer.length}b)`);
     return true;
-  } catch {
+  } catch (err) {
+    console.error(`[SCREENSHOT] Failed for ${projectId}:`, err instanceof Error ? err.message : err);
     return false;
   }
 }

@@ -20,6 +20,8 @@ export async function GET(
     headers: {
       "Content-Type": project.screenshotMime,
       "Cache-Control": "public, max-age=3600",
+      "X-Content-Type-Options": "nosniff",
+      "Content-Disposition": "inline",
     },
   });
 }
