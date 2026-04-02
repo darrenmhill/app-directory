@@ -1,5 +1,4 @@
 FROM node:22-alpine AS base
-RUN apk add --no-cache python3
 
 FROM base AS deps
 WORKDIR /app
@@ -23,8 +22,9 @@ COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/dotenv ./node_modules/dotenv
+COPY --from=builder /app/start.sh ./start.sh
 
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
-CMD npx prisma db push --skip-generate && node server.js
+CMD ["sh", "start.sh"]

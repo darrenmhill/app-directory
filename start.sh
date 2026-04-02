@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+echo "Running prisma db push..."
+node node_modules/prisma/build/index.js db push --skip-generate 2>&1 || echo "Warning: db push failed, continuing..."
+echo "Starting server..."
+exec node server.js
