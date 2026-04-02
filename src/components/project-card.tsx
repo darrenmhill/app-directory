@@ -41,9 +41,9 @@ export default function ProjectCard({
   hasScreenshot,
 }: ProjectCardProps) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-accent/30 transition-all flex flex-col">
       {/* Screenshot or placeholder */}
-      <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
+      <div className="aspect-video bg-gradient-to-br from-primary/5 to-accent/10 relative overflow-hidden">
         {hasScreenshot ? (
           <ScreenshotModal
             src={`/api/screenshots/${id}`}
@@ -51,7 +51,7 @@ export default function ProjectCard({
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-4xl font-bold text-gray-300">
+            <span className="text-4xl font-bold text-accent/30">
               {getInitials(githubName)}
             </span>
           </div>
@@ -61,20 +61,20 @@ export default function ProjectCard({
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-2 mb-2">
-          <h2 className="text-lg font-semibold text-gray-900">{displayName || githubName}</h2>
+          <h2 className="text-lg font-semibold text-primary">{displayName || githubName}</h2>
           {stars > 0 && (
-            <span className="text-sm text-gray-500 shrink-0" title="Stars">
+            <span className="text-sm text-muted shrink-0" title="Stars">
               &#9733; {stars}
             </span>
           )}
         </div>
 
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="text-sm text-secondary mb-2">
           {shortDesc.trim() || formatName(githubName)}
         </p>
 
         {longDesc && (
-          <p className="text-sm text-gray-500 mb-4 line-clamp-3">{longDesc}</p>
+          <p className="text-sm text-muted mb-4 line-clamp-3">{longDesc}</p>
         )}
 
         <div className="mt-auto flex items-center gap-3 pt-4 border-t border-gray-100">
@@ -83,7 +83,7 @@ export default function ProjectCard({
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              className="px-4 py-2 text-sm font-medium text-secondary bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
             >
               GitHub
             </a>
@@ -93,7 +93,7 @@ export default function ProjectCard({
               href={productionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 text-sm font-medium text-white bg-accent rounded-lg hover:bg-accent-hover transition-colors"
             >
               Open
             </a>

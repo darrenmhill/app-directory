@@ -5,7 +5,6 @@ import ProjectCard from "@/components/project-card";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  // Auto-sync if data is stale
   try {
     await syncIfStale();
   } catch {
@@ -22,18 +21,21 @@ export default async function HomePage() {
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <h1 className="text-3xl font-bold text-gray-900">{siteTitle}</h1>
-          <p className="mt-2 text-gray-600">
-            A collection of projects and applications
-          </p>
+      <header className="bg-primary text-white">
+        <div className="max-w-7xl mx-auto px-6 py-8 flex items-center gap-5">
+          <img src="/logo.svg" alt="Inzite" className="h-10 brightness-0 invert" />
+          <div>
+            <h1 className="text-2xl font-bold">{siteTitle}</h1>
+            <p className="mt-1 text-accent text-sm">
+              A collection of projects and applications
+            </p>
+          </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {projects.length === 0 ? (
-          <p className="text-gray-500 text-center py-12">
+          <p className="text-muted text-center py-12">
             No projects yet. Sync from GitHub via the admin panel.
           </p>
         ) : (
@@ -57,15 +59,15 @@ export default async function HomePage() {
         )}
       </main>
 
-      <footer className="mt-auto bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 text-center text-sm text-gray-500">
+      <footer className="mt-auto bg-primary text-white/60">
+        <div className="max-w-7xl mx-auto px-6 py-4 text-center text-sm">
           <a
-            href="https://github.com/darrenmhill"
+            href="https://inzite.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-700"
+            className="hover:text-accent transition-colors"
           >
-            github.com/darrenmhill
+            inzite.com
           </a>
         </div>
       </footer>

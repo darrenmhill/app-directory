@@ -30,7 +30,8 @@ async function verify(token: string): Promise<boolean> {
   return token === expected;
 }
 
-export async function login(password: string): Promise<boolean> {
+export async function login(username: string, password: string): Promise<boolean> {
+  if (username !== (process.env.ADMIN_USERNAME || "admin")) return false;
   if (password !== process.env.ADMIN_PASSWORD) return false;
 
   const token = await sign("admin");
