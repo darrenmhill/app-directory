@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Project {
+  id             String   @id @default(cuid())
+  githubName     String   @unique
+  displayName    String?
+  githubUrl      String
+  shortDesc      String   @default("")
+  longDesc       String   @default("")
+  productionUrl  String?
+  isExcluded     Boolean  @default(false)
+  displayOrder   Int      @default(0)
+  language       String?
+  stars          Int      @default(0)
+  isPrivate      Boolean  @default(false)
+  screenshotUrl  String?
+  screenshotData Bytes?
+  screenshotMime String?
+  lastGithubSync DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
