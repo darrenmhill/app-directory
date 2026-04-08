@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="w-full max-w-sm p-8 bg-white rounded-xl shadow-md">
+      <div className="w-full max-w-sm mx-4 p-6 md:p-8 bg-white rounded-xl shadow-md">
         <div className="flex justify-center mb-6">
           <img src="/logo.svg" alt="Inzite" className="h-8" />
         </div>
