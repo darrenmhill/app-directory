@@ -98,14 +98,14 @@ export default function AdminProjectEditPage() {
 
   return (
     <div className="max-w-2xl">
-      <div className="mb-6 flex items-center gap-4">
+      <div className="mb-6 flex items-center gap-3 md:gap-4">
         <Link
           href="/admin"
           className="text-sm text-gray-500 hover:text-gray-700"
         >
           &larr; Back
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900 truncate">
           {project.githubName}
         </h1>
       </div>
@@ -259,7 +259,7 @@ export default function AdminProjectEditPage() {
           )}
         </div>
 
-        <div className="flex items-center gap-4 pt-4 border-t border-gray-200">
+        <div className="flex flex-wrap items-center gap-3 md:gap-4 pt-4 border-t border-gray-200">
           <button
             type="submit"
             disabled={saving}
@@ -276,7 +276,7 @@ export default function AdminProjectEditPage() {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-gray-500 hover:text-gray-700 ml-auto"
+            className="text-sm text-gray-500 hover:text-gray-700 md:ml-auto"
           >
             View on GitHub &rarr;
           </a>
