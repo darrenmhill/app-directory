@@ -111,14 +111,6 @@ export default async function HomePage() {
               A collection of projects and applications
             </p>
           </div>
-          <a
-            href="https://app.inzite.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-auto text-sm text-white/80 hover:text-accent transition-colors"
-          >
-            Other Applications &rarr;
-          </a>
         </div>
       </header>
 
@@ -159,14 +151,6 @@ export default async function HomePage() {
             className="hover:text-accent transition-colors"
           >
             inzite.com
-          </a>
-          <a
-            href="https://app.inzite.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent transition-colors"
-          >
-            Other Applications
           </a>
         </div>
       </footer>
