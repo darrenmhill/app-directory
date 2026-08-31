@@ -18,12 +18,24 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
   return response;
 }
 
+function addRobotsHeader(pathname: string, response: NextResponse): NextResponse {
+  // Keep admin and API surfaces out of search indexes (screenshots stay
+  // indexable so project images can appear in image search)
+  if (
+    (pathname.startsWith("/admin") || pathname.startsWith("/api")) &&
+    !pathname.startsWith("/api/screenshots")
+  ) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
+  return response;
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow the login page and login API
   if (pathname === "/admin/login" || pathname === "/api/admin/login") {
-    return addSecurityHeaders(NextResponse.next());
+    return addRobotsHeader(pathname, addSecurityHeaders(NextResponse.next()));
   }
 
   // Protect admin routes
@@ -55,7 +67,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return addSecurityHeaders(NextResponse.next());
+  return addRobotsHeader(pathname, addSecurityHeaders(NextResponse.next()));
 }
 
 export const config = {

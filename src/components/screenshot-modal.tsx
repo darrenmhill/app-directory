@@ -5,9 +5,11 @@ import { useState } from "react";
 export default function ScreenshotModal({
   src,
   alt,
+  priority = false,
 }: {
   src: string;
   alt: string;
+  priority?: boolean;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -16,7 +18,10 @@ export default function ScreenshotModal({
       <img
         src={src}
         alt={alt}
-        className="w-full h-full object-cover cursor-pointer"
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
+        className="w-full h-full object-contain cursor-pointer"
         onClick={() => setOpen(true)}
       />
       {open && (

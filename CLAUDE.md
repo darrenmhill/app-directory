@@ -56,6 +56,8 @@ npx prisma db push   # Push schema changes to database
 | `ADMIN_PASSWORD` | Yes | Admin panel password |
 | `GITHUB_TOKEN` | No | GitHub API token (higher rate limits, private repo access) |
 | `NEXT_PUBLIC_SITE_TITLE` | No | Site heading (default: "App Directory") |
+| `NEXT_PUBLIC_SITE_DESCRIPTION` | No | Meta/OG description for SEO |
+| `NEXT_PUBLIC_SITE_URL` | No | Absolute origin for canonical URLs, sitemap, OG (falls back to `RAILWAY_PUBLIC_DOMAIN`) |
 
 ## Prisma Notes
 

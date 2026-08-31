@@ -1,31 +1,45 @@
 import { prisma } from "./prisma";
 import { fetchGitHubRepos } from "./github";
 
-export async function syncGitHubRepos() {
-  const repos = await fetchGitHubRepos();
+// Deduplicates concurrent syncs (e.g. several page loads while stale)
+let syncInFlight: Promise<number> | null = null;
 
-  for (const repo of repos) {
-    await prisma.project.upsert({
-      where: { githubName: repo.name },
-      create: {
-        githubName: repo.name,
-        githubUrl: repo.html_url,
-        shortDesc: repo.description || "",
-        language: repo.language,
-        stars: repo.stargazers_count,
-        isPrivate: repo.private,
-        productionUrl: repo.homepage || null,
-        lastGithubSync: new Date(),
-      },
-      update: {
-        githubUrl: repo.html_url,
-        language: repo.language,
-        stars: repo.stargazers_count,
-        isPrivate: repo.private,
-        lastGithubSync: new Date(),
-      },
+export function syncGitHubRepos(): Promise<number> {
+  if (!syncInFlight) {
+    syncInFlight = doSync().finally(() => {
+      syncInFlight = null;
     });
   }
+  return syncInFlight;
+}
+
+async function doSync() {
+  const repos = await fetchGitHubRepos();
+
+  await Promise.all(
+    repos.map((repo) =>
+      prisma.project.upsert({
+        where: { githubName: repo.name },
+        create: {
+          githubName: repo.name,
+          githubUrl: repo.html_url,
+          shortDesc: repo.description || "",
+          language: repo.language,
+          stars: repo.stargazers_count,
+          isPrivate: repo.private,
+          productionUrl: repo.homepage || null,
+          lastGithubSync: new Date(),
+        },
+        update: {
+          githubUrl: repo.html_url,
+          language: repo.language,
+          stars: repo.stargazers_count,
+          isPrivate: repo.private,
+          lastGithubSync: new Date(),
+        },
+      })
+    )
+  );
 
   return repos.length;
 }
