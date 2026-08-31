@@ -11,6 +11,7 @@ interface ProjectCardProps {
   isPrivate: boolean;
   stars: number;
   hasScreenshot: boolean;
+  screenshotVersion: number;
 }
 
 function getInitials(name: string) {
@@ -39,6 +40,7 @@ export default function ProjectCard({
   isPrivate,
   stars,
   hasScreenshot,
+  screenshotVersion,
 }: ProjectCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-accent/30 transition-all flex flex-col">
@@ -46,7 +48,7 @@ export default function ProjectCard({
       <div className="aspect-video bg-gradient-to-br from-primary/5 to-accent/10 relative overflow-hidden">
         {hasScreenshot ? (
           <ScreenshotModal
-            src={`/api/screenshots/${id}`}
+            src={`/api/screenshots/${id}?v=${screenshotVersion}`}
             alt={`${githubName} screenshot`}
           />
         ) : (

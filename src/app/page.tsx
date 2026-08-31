@@ -55,6 +55,7 @@ export default async function HomePage() {
                 isPrivate={project.isPrivate}
                 stars={project.stars}
                 hasScreenshot={!!project.screenshotMime}
+                screenshotVersion={project.updatedAt.getTime()}
               />
             ))}
           </div>

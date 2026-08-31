@@ -27,6 +27,7 @@ export default function AdminProjectEditPage() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
+  const [screenshotVersion, setScreenshotVersion] = useState(() => Date.now());
 
   useEffect(() => {
     fetch(`/api/admin/projects/${params.id}`)
@@ -80,8 +81,10 @@ export default function AdminProjectEditPage() {
 
     if (res.ok) {
       setProject({ ...project, hasScreenshot: true });
+      setScreenshotVersion(Date.now());
     }
     setUploading(false);
+    e.target.value = "";
   }
 
   async function handleScreenshotDelete() {
@@ -234,7 +237,7 @@ export default function AdminProjectEditPage() {
           {project.hasScreenshot && (
             <div className="mb-3">
               <img
-                src={`/api/screenshots/${project.id}`}
+                src={`/api/screenshots/${project.id}?v=${screenshotVersion}`}
                 alt={`${project.githubName} screenshot`}
                 className="w-full max-w-md rounded-lg border border-gray-200"
               />
