@@ -26,7 +26,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     ...countsharpPages(origin),
+    ...realmquest2Pages(origin),
   ];
+}
+
+// RealmQuest 2.0 marketing site: English only at /realmquest2.
+// Keep in sync with the rewrites in next.config.ts.
+function realmquest2Pages(origin: string): MetadataRoute.Sitemap {
+  const pages = [
+    { path: "", changeFrequency: "monthly", priority: 0.8 },
+    { path: "/support", changeFrequency: "yearly", priority: 0.5 },
+    { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
+  ] as const;
+  return pages.map(({ path, changeFrequency, priority }) => ({
+    url: `${origin}/realmquest2${path}`,
+    changeFrequency,
+    priority,
+  }));
 }
 
 // CountSharp marketing site: English at /countsharp, translations at /countsharp/<lang>.

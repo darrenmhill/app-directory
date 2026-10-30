@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         source: "/countsharp/:lang(es|es-mx|fr|de|it|pt-br|ja)/:page(privacy|support)",
         destination: "/countsharp/:lang/:page.html",
       },
+      // RealmQuest 2.0 marketing site (English only for now)
+      { source: "/realmquest2", destination: "/realmquest2/index.html" },
+      { source: "/realmquest2/privacy", destination: "/realmquest2/privacy.html" },
+      { source: "/realmquest2/support", destination: "/realmquest2/support.html" },
     ];
   },
 };
