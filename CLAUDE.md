@@ -48,6 +48,12 @@ npx prisma db push   # Push schema changes to database
 | `/admin/projects/[id]` | Edit project details + upload screenshot |
 | `/api/admin/sync` | Trigger GitHub repo sync |
 
+### App marketing sites
+- Static sites for individual apps live in `public/<app>/` (e.g. `public/countsharp/`: home page, support, privacy policy)
+- Clean URLs (`/countsharp`, `/countsharp/privacy`, `/countsharp/support`) are rewrites in `next.config.ts`, and the pages are in `src/app/sitemap.ts`
+- Pages link with absolute paths (`/countsharp/...`), because Next.js redirects `/countsharp/` to `/countsharp` and relative links would then resolve from `/`
+- The App Store listings use these URLs, so keep them stable
+
 ## Environment Variables
 
 | Variable | Required | Purpose |

@@ -17,12 +17,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fall back to now if the database is unavailable
   }
 
+  const origin = siteUrl || "http://localhost:3000";
   return [
     {
-      url: `${siteUrl || "http://localhost:3000"}/`,
+      url: `${origin}/`,
       lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
+    { url: `${origin}/countsharp`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${origin}/countsharp/support`, changeFrequency: "yearly", priority: 0.5 },
+    { url: `${origin}/countsharp/privacy`, changeFrequency: "yearly", priority: 0.3 },
   ];
 }
