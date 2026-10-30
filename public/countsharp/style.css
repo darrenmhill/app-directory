@@ -84,6 +84,14 @@ ul { padding-left: 20px; }
 }
 .site-footer p { margin: 6px 0; }
 
+/* Language switcher: every page, footer row */
+.lang-switcher { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 16px; font-size: 0.85rem; }
+.lang-switcher a { color: var(--muted); text-decoration: none; }
+.lang-switcher a:hover { color: var(--gold); }
+.lang-switcher a[aria-current="page"] { color: var(--text); }
+.site-footer .lang-switcher { justify-content: center; margin: 14px 0; }
+.lang-note { color: var(--muted); font-size: 0.85rem; margin: 4px 0 0; }
+
 @media (max-width: 520px) {
   .nav nav { gap: 14px; font-size: 0.85rem; }
   .nav nav a[href="#features"] { display: none; }

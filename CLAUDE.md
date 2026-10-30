@@ -53,6 +53,9 @@ npx prisma db push   # Push schema changes to database
 - Clean URLs (`/countsharp`, `/countsharp/privacy`, `/countsharp/support`) are rewrites in `next.config.ts`, and the pages are in `src/app/sitemap.ts`
 - Pages link with absolute paths (`/countsharp/...`), because Next.js redirects `/countsharp/` to `/countsharp` and relative links would then resolve from `/`
 - The App Store listings use these URLs, so keep them stable
+- Translations: `es` (Spain), `es-mx`, `fr`, `de`, `it`, `pt-br`, `ja` at `/countsharp/<lang>`, `/countsharp/<lang>/support` and `/countsharp/<lang>/privacy`; English stays at the URLs above. Files are `public/countsharp/<lang>/{index,support,privacy}.html`, sharing `/countsharp/style.css` and `/countsharp/img/`. Two regex rewrites (`:lang(es|es-mx|fr|de|it|pt-br|ja)`) serve them, and `src/app/sitemap.ts` lists every language with hreflang alternates
+- Every page (English too) has `<link rel="alternate" hreflang>` for all eight languages plus `x-default` (English), and a language switcher (`nav.lang-switcher`) linking to the same page in each language. Adding a language means updating the rewrites, the sitemap list, and the hreflang block and switcher on every page
+- Blackjack and Apple terms follow the App Store listing translations (`store/listing-localizations.json` in the cardcount repo). Translated home pages say the app is in English; translated privacy policies say the English version prevails
 
 ## Environment Variables
 

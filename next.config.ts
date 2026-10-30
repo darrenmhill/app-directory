@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
       { source: "/countsharp", destination: "/countsharp/index.html" },
       { source: "/countsharp/privacy", destination: "/countsharp/privacy.html" },
       { source: "/countsharp/support", destination: "/countsharp/support.html" },
+      // Translations live in public/countsharp/<lang>/ (English stays at the URLs above)
+      { source: "/countsharp/:lang(es|es-mx|fr|de|it|pt-br|ja)", destination: "/countsharp/:lang/index.html" },
+      {
+        source: "/countsharp/:lang(es|es-mx|fr|de|it|pt-br|ja)/:page(privacy|support)",
+        destination: "/countsharp/:lang/:page.html",
+      },
     ];
   },
 };
