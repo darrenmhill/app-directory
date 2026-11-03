@@ -64,7 +64,7 @@ ul { padding-left: 20px; }
   max-width: 1080px; margin: 0 auto; padding: 24px 16px 40px;
 }
 .shots figure { flex: 0 0 230px; margin: 0; scroll-snap-align: center; text-align: center; }
-.shots img { width: 100%; height: auto; border-radius: 24px; border: 1px solid var(--border); background: var(--surface); }
+.shots img { width: 100%; height: auto; border-radius: 26px; border: 1px solid var(--border); background: #040b16; padding: 8px; box-sizing: border-box; }
 .shots figcaption { margin-top: 10px; color: var(--muted); font-size: 0.9rem; }
 @media (min-width: 1000px) { .shots { justify-content: center; overflow: visible; } }
 
@@ -84,7 +84,7 @@ ul { padding-left: 20px; }
 .devices { max-width: 760px; margin: 0 auto; padding: 48px 16px 16px; text-align: center; }
 .devices h2 { border: 0; padding: 0; font-size: 1.8rem; margin: 0 0 12px; }
 .devices p { color: var(--muted); margin: 0 auto 28px; max-width: 560px; }
-.devices img { width: 100%; max-width: 560px; height: auto; border-radius: 24px; border: 1px solid var(--border); }
+.devices img { width: 100%; max-width: 560px; height: auto; border-radius: 26px; border: 1px solid var(--border); background: #040b16; padding: 10px; box-sizing: border-box; }
 .devices.duo { max-width: 900px; }
 .devices.duo img { max-width: 860px; }
 
